@@ -1,0 +1,2 @@
+# USGS-EarthquakeData
+Global earthquake data from the United States Geological Survey is visualized here with the aim to be more accessible and meaningful to the public and government organizations. The USGS is responsive for providing scientific data on natural hazards, the health of our ecosystems and environment, and the impacts of climate and land-use change. The information gathered is displayed using Leaflet, and with increased awareness the hope is to secure funding specifically for these worldwide issues.
