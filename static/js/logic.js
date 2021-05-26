@@ -132,7 +132,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
           + "<br>Depth: "
           + feature.geometry.coordinates[2]
           + "<br>Location: "
-          + feature.properties.places
+          + feature.properties.place
       );
     }
   }).addTo(earthquakes)
