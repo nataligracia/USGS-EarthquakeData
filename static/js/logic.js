@@ -1,34 +1,40 @@
 // We create the tile layers that will be the selectable backgrounds of our map.
 
 // Create a L.tilelayer() using the 'mapbox/light-v10' map id
-var grayMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+var grayscale = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,
     id: "mapbox/light-v10",
+    // noWrap: true,
+    // bounds: [[-90, -180],[90, 180]],
     accessToken: API_KEY
   }
 );
 
 // Create a L.tilelayer() using the 'mapbox/satellite-v9' map id
-var satelliteMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+var satelliteview = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,
     id: "mapbox/satellite-v9",
+    // noWrap: true,
+    // bounds: [[-90, -180],[90, 180]],
     accessToken: API_KEY
   }
 );
 
 // Create a L.tilelayer() using the 'mapbox/satellite-v9' map id
-var outdoorsMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+var outdoorslayer = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
   tileSize: 512,
   maxZoom: 18,
   zoomOffset: -1,
   id: "mapbox/outdoors-v11",
+  // noWrap: true,
+  // bounds: [[-90, -180],[90, 180]],
   accessToken: API_KEY
 });
 
@@ -39,11 +45,11 @@ var outdoorsMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{
 
 
 // Create a L.map(), reference the 'mapid' element in the HTML page, and pass in the three layers above
-var myMap = L.map("mapid", {
+var allMap = L.map("mapid", {
   // center: [40.7, -94.5],
   center: [40.52, 34.34],
-  zoom: 3,
-  layers: [grayMap, satelliteMap, outdoorsMap]
+  zoom: 2,
+  layers: [grayscale, satelliteview, outdoorslayer]
 });
 
 
@@ -57,9 +63,9 @@ var earthquakes = new L.LayerGroup();
 // Create a basemaps object for the three tileLayers from above. 
 // The key should be a human readable name for the tile layer, and the value should be a tileLayer variable
 var baseMaps = {
-  Grayscale: grayMap,
-  Satellite: satelliteMap,
-  Outdoors: outdoorsMap,
+  Grayscale: grayscale,
+  Satellite: satelliteview,
+  Outdoors: outdoorslayer,
 };
 
 // // We define an object that contains all of our overlays. Any combination of
@@ -76,7 +82,7 @@ var overlayMaps = {
 L
   .control
   .layers(baseMaps, overlayMaps)
-  .addTo(myMap);
+  .addTo(allMap);
 
 function styleInfo(feature) {
   return {
@@ -93,17 +99,17 @@ function styleInfo(feature) {
 function getColor(depth) {
   switch (true) {
   case depth > 90:
-    return "#ea2c2c";
+    return "red";
   case depth > 70:
-    return "#ea822c";
+    return "orange";
   case depth > 50:
-    return "#ee9c00";
+    return "lightgreen";
   case depth > 30:
-    return "#eecc00";
+    return "cornflowerblue";
   case depth > 10:
-    return "#d4ee00";
+    return "lavender";
   default:
-    return "#98ee00";
+    return "lemonchiffon";
   }
 }
 
@@ -140,7 +146,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
   }).addTo(earthquakes)
   
   // Then we add the earthquake layer to our map.
-  earthquakes.addTo(myMap); // use .addTo to add the earthquakes LayerGroup to the myMap object
+  earthquakes.addTo(allMap); // use .addTo to add the earthquakes LayerGroup to the myMap object
 });
   // Create a dynamic legend that describes the color scheme for the circles
   // see this tutorial for guidance: https://www.igismap.com/legend-in-leafletjs-map-with-topojson/
@@ -149,8 +155,8 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
   legend.onAdd = function() {
     var div = L.DomUtil.create("div", "info legend");
     var labels = ['<strong> Earthquake Depth: </strong>']
-    var grades = [-10, 10, 30, 50, 70, 90]
-    var colors = ["#98ee00", "#d4ee00", "#eecc00", "#ee9c00", "#ea822c", "#ea2c2c"];
+    var grades = [0, 10, 30, 50, 70, 90]
+    var colors = ["lemonchiffon", "lavender", "cornflowerblue", "lightgreen", "orange", "red"];
 
     for (var i = 0; i < grades.length; i++) {
       div.innerHTML += "<i style='background: "
@@ -162,7 +168,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
     return div;
   };
 
-  legend.addTo(myMap);
+  legend.addTo(allMap);
 
   // BONUS
   // Make another d3.json() call to the tectonic plates API endpoint
@@ -176,5 +182,5 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
       .addTo(tectonicPlates); // use .addTo() to add the l.geoJson layer to the tectonicPlates LayerGroup
 
       // Then add the tectonicplates layer to the map.
-      tectonicPlates.addTo(myMap); // use .addTo to add the tectonicPlates LayerGroup to the myMap object
+      tectonicPlates.addTo(allMap); // use .addTo to add the tectonicPlates LayerGroup to the myMap object
     });
