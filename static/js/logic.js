@@ -137,7 +137,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
     // use onEachFeature to bind a popup with the magnitude and location of the earthquake to the layer (see above tutorial for an example)
     onEachFeature: function(feature, layer) {
       layer.bindPopup(
-        "<h3>Earthquake</h3><br>"
+        "<h4>Earthquake Details:</h4>"
           + "Magnitude: "
           + feature.properties.mag
           + "<br>Depth: "
@@ -160,7 +160,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
     var grades = [0, 10, 25, 50, 75, 90]
     var colors = ["lemonchiffon", "lavender", "cornflowerblue", "lightgreen", "orange", "red"];
   
-    div.innerHTML += "<h1>Earthquake</h1><br>"
+    div.innerHTML += "<h3>Earthquake Depth:</h3>"
   
     for (var i = 0; i < grades.length; i++) {
       div.innerHTML += "<i style='background: "
