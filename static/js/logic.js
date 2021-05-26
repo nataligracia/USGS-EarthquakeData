@@ -49,9 +49,12 @@ var allMap = L.map("mapid", {
   // center: [40.7, -94.5],
   center: [40.52, 34.34],
   zoom: 2,
+  // minZoom: 1,
+  // maxZoom: 1,
   layers: [grayscale, satelliteview, outdoorslayer]
 });
 
+// map.setView([0, 0], 0);
 
 // We create the layers for our two different sets of data, earthquakes and
 // tectonicplates.
@@ -100,11 +103,11 @@ function getColor(depth) {
   switch (true) {
   case depth > 90:
     return "red";
-  case depth > 70:
+  case depth > 75:
     return "orange";
   case depth > 50:
     return "lightgreen";
-  case depth > 30:
+  case depth > 25:
     return "cornflowerblue";
   case depth > 10:
     return "lavender";
@@ -134,8 +137,8 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
     // use onEachFeature to bind a popup with the magnitude and location of the earthquake to the layer (see above tutorial for an example)
     onEachFeature: function(feature, layer) {
       layer.bindPopup(
-        
-        "Magnitude: "
+        "<h3>Earthquake</h3><br>"
+          + "Magnitude: "
           + feature.properties.mag
           + "<br>Depth: "
           + feature.geometry.coordinates[2]
@@ -154,16 +157,17 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
 
   legend.onAdd = function() {
     var div = L.DomUtil.create("div", "info legend");
-    var labels = ['<strong> Earthquake Depth: </strong>']
-    var grades = [0, 10, 30, 50, 70, 90]
+    var grades = [0, 10, 25, 50, 75, 90]
     var colors = ["lemonchiffon", "lavender", "cornflowerblue", "lightgreen", "orange", "red"];
-
+  
+    div.innerHTML += "<h1>Earthquake</h1><br>"
+  
     for (var i = 0; i < grades.length; i++) {
       div.innerHTML += "<i style='background: "
       + colors[i]
       + "'></i> "
       + grades[i]
-      + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+      + (grades[i + 1] ? "&ndash;" + (grades[i + 1]-1) + "<br>" : "+");
     }
     return div;
   };
