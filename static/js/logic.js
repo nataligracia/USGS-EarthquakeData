@@ -40,7 +40,8 @@ var outdoorsMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{
 
 // Create a L.map(), reference the 'mapid' element in the HTML page, and pass in the three layers above
 var myMap = L.map("mapid", {
-  center: [40.7, -94.5],
+  // center: [40.7, -94.5],
+  center: [40.52, 34.34],
   zoom: 3,
   layers: [grayMap, satelliteMap, outdoorsMap]
 });
@@ -110,7 +111,7 @@ function getRadius(mag) {
   if (mag === 0) {
     return 1;
   }
-    return mag * 4;
+    return mag * 3;
 }
 
 // Use d3.json() to call the API endpoint for earthquake geoJSON data, 
@@ -127,6 +128,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
     // use onEachFeature to bind a popup with the magnitude and location of the earthquake to the layer (see above tutorial for an example)
     onEachFeature: function(feature, layer) {
       layer.bindPopup(
+        
         "Magnitude: "
           + feature.properties.mag
           + "<br>Depth: "
@@ -142,12 +144,11 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
 });
   // Create a dynamic legend that describes the color scheme for the circles
   // see this tutorial for guidance: https://www.igismap.com/legend-in-leafletjs-map-with-topojson/
-  var legend = L.control({
-    position: "bottomright"
-  });
+  var legend = L.control({position: "bottomright"});
 
   legend.onAdd = function() {
     var div = L.DomUtil.create("div", "info legend");
+    var labels = ['<strong> Earthquake Depth: </strong>']
     var grades = [-10, 10, 30, 50, 70, 90]
     var colors = ["#98ee00", "#d4ee00", "#eecc00", "#ee9c00", "#ea822c", "#ea2c2c"];
 
