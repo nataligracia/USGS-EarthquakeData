@@ -82,10 +82,7 @@ var overlayMaps = {
 };
 
 // // Add a L.control.layers() object and pass in the baseMaps and overlayMaps, and then .addTo myMap
-L
-  .control
-  .layers(baseMaps, overlayMaps)
-  .addTo(allMap);
+L.control.layers(baseMaps, overlayMaps).addTo(allMap);
 
 function styleInfo(feature) {
   return {
