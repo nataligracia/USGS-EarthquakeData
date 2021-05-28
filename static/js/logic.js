@@ -122,7 +122,7 @@ function getRadius(mag) {
 
 // Use d3.json() to call the API endpoint for earthquake geoJSON data, 
 // .then() fire off an anonymous function that takes a single argument `data`.
-d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson").then(function(data) {
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson").then(function(data) {
   // Use L.geoJson() to parse the data, and do the following:
   L.geoJson(data, {
     // use pointToLayer to convert each feature to an L.circleMarker, see https://geospatialresponse.wordpress.com/2015/07/26/leaflet-geojson-pointtolayer/ for a tutorial
