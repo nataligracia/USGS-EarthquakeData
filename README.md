@@ -6,6 +6,7 @@ USGS: United States Geological Survey (GeoJSON Summary Format- Past 30 Days)
 This dataset updates once per minute.
 https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
 <br>
+<br>
 Tectonic Plate Information (GeoJSON Format of Boundaries)
 https://github.com/fraxen/tectonicplates
 
