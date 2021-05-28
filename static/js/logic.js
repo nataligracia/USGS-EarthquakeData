@@ -117,7 +117,7 @@ function getRadius(mag) {
   if (mag === 0) {
     return 1;
   }
-    return mag * 3;
+    return mag * 2;
 }
 
 // Use d3.json() to call the API endpoint for earthquake geoJSON data, 

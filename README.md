@@ -9,9 +9,8 @@ https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
 Tectonic Plate Information (GeoJSON Format of Boundaries)
 https://github.com/fraxen/tectonicplates
 
-##
-
-
+## Description
+This interactive Leaflet map uses Mapbox API and various view layers to show earthquakes across the globe for the past 30 days. In addition, the tectonic plate boudaries are added in with a static json file. Users can choose between three view layers and select which data to view.
 
 
 ## The visualization has multiple views:
